@@ -1,0 +1,1289 @@
+
+; SWEET VICTORY by MrL314
+;  attempt at a new victory/podium theme for SMK
+;  Last updated: Oct. 1, 2020
+
+
+
+.header
+	=SPC_ADDR xd000
+
+	=whole x90
+	=half x48
+ 	=qtr x24
+ 	=eth x12
+ 	=sxt x09
+ 	=thrd x06
+
+ 	=dot_half x6c
+ 	=dot_qtr x36
+ 	=dot_eth x1b
+
+ 	=qtr_trpl x18
+ 	=eth_trpl x0c
+ 	=sxt_trpl x06
+
+
+ 	=trumpet_vol x9e
+ 	=trumpet_cresc_vol x50
+ 	=trumpet_big_vol xe9
+ 	=trumpet_single_double_volume xce ; if using all SMKPADs 
+
+
+ 	=SMK_PAD x08
+ 	=HORN x09
+
+ 	=SMK_PAD_transpose xF4
+ 	=HORN_transpose x00
+
+ 	=trumpet_1_instrument x08 
+ 	=trumpet_2_instrument x08 
+ 	=trumpet_3_instrument x08 
+
+ 	=trumpet_1_transpose xF4 
+ 	=trumpet_2_transpose xF4 
+ 	=trumpet_3_transpose xF4 
+
+ 	=slap_bass_instrument x0c
+ 	=slap_bass_vol xce
+ 	=slap_bass_transpose x00
+
+ 	=bongo_instrument x10
+ 	=bongo_note >C4
+
+ 	=drum_vol x78
+ 	=snare_vol x60
+
+ 	=hihat_note >C4
+ 	=snare_note >F3
+ 	=kick_note >F1
+
+ 	=hihat x04
+ 	=snare x05
+ 	=kick_drum x10 ; x06 is official kick drum, but sounds like russian hardbass
+
+ 	=glocken x14 ; was x0d ; I like x11 ; x0b is ... odd
+ 	=glocken_vol x30
+ 	=glocken_vibra_delay x03
+ 	=glocken_vibra_rate x03
+ 	=glocken_vibra_depth x80
+
+ 	=glocken_transpose xf4
+
+ 	=whistle x19
+
+
+.songs
+	dw $victory
+
+
+
+.victory
+	phrs $intro
+	phrs $main_loop
+	phrs $main_loop
+	phrs $bridge
+	goto $victory[2]
+	ends
+
+
+.intro
+	dw $p0_trumpet_1, $p0_trumpet_2, $p0_trumpet_3, $p0_slap_bass, $p0_snare, $p0_kick_hihat, $p0_bongo, $p0_effects
+
+.main_loop
+	dw $p1_trumpet_1, $p1_trumpet_2, $p1_trumpet_3, $p1_slap_bass, $p1_snare, $p1_kick_hihat, $p1_glocken, $p1_effects
+
+.bridge
+	dw $p2_trumpet_1, $p2_trumpet_2, $p2_trumpet_3, $p2_slap_bass, $p2_snare, $p2_kick_hihat, $p2_glocken, $p2_effects
+
+
+
+
+.p0_trumpet_1
+	SET_MVOL xff
+	SET_TEMPO x2b
+
+
+	SET_ECHO %01001111, x38, x38
+	ECHO_PRMS x03, x10, x01
+
+
+	SET_INSTR :trumpet_1_instrument
+	SET_VVOL :trumpet_vol
+
+	VOC_TRNSP :trumpet_1_transpose
+
+	SET_D_SV :sxt, x7b
+	PLAY_NOTE >B4
+	PLAY_NOTE >B4
+	TIE_NOTE
+	PLAY_NOTE >C#5
+	REST_NOTE
+	PLAY_NOTE >D5
+	TIE_NOTE
+	SET_DUR :half
+
+	SET_VIBRA x02, x10, x90
+	FADE_VIBRA :half
+
+	FADE_VVOL :half, :trumpet_big_vol
+	PLAY_NOTE >D#5
+	VIBRA_OFF
+	SET_DUR :sxt
+	TIE_NOTE
+
+	END
+
+
+.p0_trumpet_2
+	
+	SET_INSTR :trumpet_2_instrument
+	SET_VVOL :trumpet_vol
+
+	VOC_TRNSP :trumpet_2_transpose
+
+	SET_D_SV :sxt, x7b
+	PLAY_NOTE >F#4
+	PLAY_NOTE >F#4
+	TIE_NOTE
+	PLAY_NOTE >G#4
+	REST_NOTE
+	PLAY_NOTE >A4
+	TIE_NOTE
+	SET_DUR :half
+
+	SET_VIBRA x02, x10, x90
+	FADE_VIBRA :half
+
+	FADE_VVOL :half, :trumpet_big_vol
+	PLAY_NOTE >A#4
+	VIBRA_OFF
+	SET_DUR :sxt
+	TIE_NOTE
+
+	END
+
+.p0_trumpet_3
+	
+	SET_INSTR :trumpet_3_instrument
+	SET_VVOL :trumpet_vol
+
+	VOC_TRNSP :trumpet_3_transpose
+
+	SET_D_SV :sxt, x7b
+	PLAY_NOTE >D#4
+	PLAY_NOTE >D#4
+	TIE_NOTE
+	PLAY_NOTE >F#4
+	REST_NOTE
+	PLAY_NOTE >F#4
+	TIE_NOTE
+	SET_DUR :half
+
+	SET_VIBRA x02, x10, x90
+	FADE_VIBRA :half
+
+	FADE_VVOL :half, :trumpet_big_vol
+	PLAY_NOTE >F#4
+	VIBRA_OFF
+	SET_DUR :sxt
+	TIE_NOTE
+
+	END
+
+
+
+.p0_slap_bass
+	
+	SET_INSTR :slap_bass_instrument
+	SET_VVOL :slap_bass_vol
+
+	;VOC_TRNSP :slap_bass_tranpose
+
+	SET_D_SV :eth, x7d
+	PLAY_NOTE >A2
+	SET_DUR :sxt
+	REST_NOTE
+	PLAY_NOTE >B2
+	TIE_NOTE
+	REST_NOTE
+	SET_DUR :qtr
+	PLAY_NOTE >D#3
+	SET_DUR :sxt
+	PLAY_NOTE >G#2
+	PLAY_NOTE >B2
+	PLAY_NOTE >G#2
+	PLAY_NOTE >B2
+	PLAY_NOTE >E3
+	PLAY_NOTE >B2
+
+	
+
+
+
+
+
+.p0_snare
+	SET_INSTR :snare
+	SET_VVOL :snare_vol
+
+	SET_D_SV :eth, x27
+	PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+		
+	
+
+
+
+.p0_kick_hihat
+	SET_INSTR :kick_drum
+	SET_VVOL :drum_vol
+
+
+	SET_D_SV :sxt, x29
+	PLAY_NOTE :kick_note
+	PLAY_NOTE :kick_note
+	SET_INSTR :hihat
+	PLAY_NOTE :hihat_note
+	SET_INSTR :kick_drum
+	PLAY_NOTE :kick_note
+	REST_NOTE
+	PLAY_NOTE :kick_note
+	SET_INSTR :hihat
+	PLAY_NOTE :hihat_note
+	SET_INSTR :kick_drum
+	PLAY_NOTE :kick_note
+	SET_DUR :eth
+	PLAY_NOTE :kick_note
+	SET_INSTR :hihat
+	PLAY_NOTE :hihat_note
+	SET_INSTR :kick_drum
+	PLAY_NOTE :kick_note
+	SET_INSTR :hihat
+	PLAY_NOTE :hihat_note
+
+	
+
+
+
+
+.p0_effects
+	SET_VVOL x4e
+
+	SET_INSTR :whistle
+	SET_D_SV :half, x7d
+
+	REST_NOTE
+
+	SET_DUR :sxt
+	REST_NOTE
+	PLAY_NOTE >B4
+	REST_NOTE
+	PLAY_NOTE >B4
+	REST_NOTE
+	PLAY_NOTE >B4
+	PLAY_NOTE >B4
+	TIE_NOTE
+
+	
+
+
+
+.p0_bongo
+	SET_INSTR :bongo_instrument
+	SET_VVOL x60
+
+	SET_D_SV :half, x27
+	REST_NOTE
+	SET_DUR :thrd
+	FADE_VVOL :half, xff
+	SET_PAN x00
+	FADE_PAN :half, x1f
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+	PLAY_NOTE :bongo_note
+
+
+
+
+
+.p1_trumpet_1
+
+	BEND_OFF
+	
+	SET_INSTR :trumpet_1_instrument
+	SET_VVOL :trumpet_vol
+
+	VOC_TRNSP :trumpet_1_transpose
+
+	ECHO_PRMS x03, x10, x01
+
+	SET_D_SV :qtr, x7b
+	PLAY_NOTE >E5
+	SET_DUR :sxt
+	REST_NOTE
+	SET_DUR :dot_eth
+	PLAY_NOTE >B4
+	PLAY_NOTE >C#5
+	SET_DUR :sxt
+	PLAY_NOTE >B4
+	SET_DUR :eth
+	REST_NOTE
+	PLAY_NOTE >A4
+
+	SET_DUR :sxt
+	PLAY_NOTE >G#4
+	PLAY_NOTE >G#4
+	TIE_NOTE
+	REST_NOTE
+	PLAY_NOTE >A4
+	REST_NOTE
+	REST_NOTE
+	SET_VVOL :trumpet_single_double_volume
+	PLAY_NOTE >B4
+	SET_DUR :half
+	TIE_NOTE
+
+	SET_VVOL :trumpet_vol
+	SET_DUR :qtr
+	PLAY_NOTE >E5
+	SET_DUR :sxt
+	REST_NOTE
+	SET_DUR :dot_eth
+	PLAY_NOTE >B4
+	PLAY_NOTE >C#5
+	SET_DUR :sxt
+	PLAY_NOTE >B4
+	SET_DUR :eth
+	REST_NOTE
+	PLAY_NOTE >A4
+
+	SET_DUR :dot_eth
+	PLAY_NOTE >G#4
+	SET_DUR :sxt
+	REST_NOTE
+	PLAY_NOTE >B4
+	REST_NOTE
+	REST_NOTE
+	SET_VVOL :trumpet_single_double_volume
+	PLAY_NOTE >E5
+	SET_DUR :qtr
+	TIE_NOTE
+	PLAY_NOTE >F#5
+
+	END
+
+
+.p1_trumpet_2
+	
+	BEND_OFF	
+
+	SET_INSTR :trumpet_2_instrument
+	SET_VVOL :trumpet_vol
+
+	VOC_TRNSP :trumpet_2_transpose
+
+	SET_D_SV :qtr, x7b
+	PLAY_NOTE >E5
+	SET_DUR :sxt
+	REST_NOTE
+	SET_DUR :dot_eth
+	PLAY_NOTE >B4
+	PLAY_NOTE >C#5
+	SET_DUR :sxt
+	PLAY_NOTE >B4
+	SET_DUR :eth
+	REST_NOTE
+	PLAY_NOTE >A4
+
+	SET_DUR :sxt
+	PLAY_NOTE >G#4
+	PLAY_NOTE >G#4
+	TIE_NOTE
+	REST_NOTE
+	PLAY_NOTE >A4
+	REST_NOTE
+	REST_NOTE
+	PLAY_NOTE >F#4
+	SET_DUR :half
+	TIE_NOTE
+
+
+	SET_DUR :qtr
+	PLAY_NOTE >E5
+	SET_DUR :sxt
+	REST_NOTE
+	SET_DUR :dot_eth
+	PLAY_NOTE >B4
+	PLAY_NOTE >C#5
+	SET_DUR :sxt
+	PLAY_NOTE >B4
+	SET_DUR :eth
+	REST_NOTE
+	PLAY_NOTE >A4
+
+	SET_DUR :dot_eth
+	PLAY_NOTE >G#4
+	SET_DUR :sxt
+	REST_NOTE
+	PLAY_NOTE >B4
+	REST_NOTE
+	REST_NOTE
+	PLAY_NOTE >B4
+	SET_DUR :half
+	TIE_NOTE
+
+	END
+
+
+.p1_trumpet_3
+	
+	BEND_OFF
+
+	SET_INSTR :trumpet_3_instrument
+	SET_VVOL :trumpet_vol
+
+	VOC_TRNSP :trumpet_3_transpose
+
+	SET_D_SV :qtr, x7b
+	PLAY_NOTE >G#4
+	SET_DUR :sxt
+	REST_NOTE
+	SET_DUR :dot_eth
+	PLAY_NOTE >G#4
+	PLAY_NOTE >A4
+	SET_DUR :sxt
+	PLAY_NOTE >G#4
+	SET_DUR :eth
+	REST_NOTE
+	PLAY_NOTE >F#4
+
+	SET_DUR :sxt
+	PLAY_NOTE >E4
+	PLAY_NOTE >E4
+	TIE_NOTE
+	REST_NOTE
+	PLAY_NOTE >E4
+	REST_NOTE
+	REST_NOTE
+	PLAY_NOTE >B3
+	SET_DUR :half
+	TIE_NOTE
+
+
+	SET_DUR :qtr
+	PLAY_NOTE >G#4
+	SET_DUR :sxt
+	REST_NOTE
+	SET_DUR :dot_eth
+	PLAY_NOTE >G#4
+	PLAY_NOTE >A4
+	SET_DUR :sxt
+	PLAY_NOTE >G#4
+	SET_DUR :eth
+	REST_NOTE
+	PLAY_NOTE >F#4
+
+	SET_DUR :dot_eth
+	PLAY_NOTE >E4
+	SET_DUR :sxt
+	REST_NOTE
+	PLAY_NOTE >G#4
+	REST_NOTE
+	REST_NOTE
+	PLAY_NOTE >F#4
+	SET_DUR :half
+	TIE_NOTE
+
+	END
+
+
+.p1_slap_bass
+	
+	SET_INSTR :slap_bass_instrument
+	SET_VVOL :slap_bass_vol
+
+	;VOC_TRNSP :slap_bass_tranpose
+
+	SET_D_SV :eth, x7d
+	PLAY_NOTE >E2
+	SET_DUR :sxt
+	REST_NOTE
+	PLAY_NOTE >B2
+	TIE_NOTE
+	REST_NOTE
+	SET_DUR :qtr
+	PLAY_NOTE >E3
+	SET_DUR :sxt
+	PLAY_NOTE >G#2
+	PLAY_NOTE >B2
+	PLAY_NOTE >E3
+	PLAY_NOTE >G#2
+	PLAY_NOTE >B2
+	PLAY_NOTE >E3
+
+	PLAY_NOTE >E2
+	PLAY_NOTE >B2
+	TIE_NOTE
+	PLAY_NOTE >E3
+	PLAY_NOTE >F#3
+	REST_NOTE
+	REST_NOTE
+	PLAY_NOTE >B2
+	SET_DUR :half
+	TIE_NOTE
+
+	SET_DUR :eth
+	PLAY_NOTE >E2
+	SET_DUR :dot_eth
+	PLAY_NOTE >B2
+	SET_DUR :sxt
+	PLAY_NOTE >E3
+	PLAY_NOTE >G#3
+	PLAY_NOTE >A2
+	PLAY_NOTE >F#3
+	PLAY_NOTE >A2
+	PLAY_NOTE >E3
+	PLAY_NOTE >A2
+	PLAY_NOTE >D#3
+	PLAY_NOTE >A2
+	PLAY_NOTE >C#3
+	PLAY_NOTE >D#3
+
+	PLAY_NOTE >F#2
+	PLAY_NOTE >A2
+	PLAY_NOTE >C#3
+	PLAY_NOTE >F#2
+	PLAY_NOTE >B2
+	PLAY_NOTE >D#3
+	PLAY_NOTE >F#3
+	SET_DUR :dot_eth
+	PLAY_NOTE >A2
+	PLAY_NOTE >A#2
+	PLAY_NOTE >B2
+
+	END
+
+
+.p1_snare
+	SET_INSTR :snare
+	SET_VVOL :snare_vol
+
+	SET_D_SV :eth, x27
+	PLAY_NOTE :snare_note
+	REST_NOTE ;PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	REST_NOTE ;PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	REST_NOTE ;PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	REST_NOTE ;PLAY_NOTE :snare_note
+
+	PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	REST_NOTE ;PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	SET_DUR :sxt
+	REST_NOTE
+	PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	REST_NOTE
+	PLAY_NOTE :snare_note
+
+	SET_DUR :eth
+	PLAY_NOTE :snare_note
+	REST_NOTE ;PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	REST_NOTE ;PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	REST_NOTE ;PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	REST_NOTE ;PLAY_NOTE :snare_note
+
+	SET_DUR :sxt
+	PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	REST_NOTE
+	PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	REST_NOTE
+	PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	REST_NOTE
+	PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	REST_NOTE
+	PLAY_NOTE :snare_note
+		
+	END
+
+
+.p1_kick_hihat
+	SET_INSTR :kick_drum
+	SET_VVOL :drum_vol
+
+
+	SET_D_SV :eth, x29
+	PLAY_NOTE :kick_note
+	SET_INSTR :hihat
+	SET_DUR :sxt
+	PLAY_NOTE :hihat_note
+	PLAY_NOTE :hihat_note
+	SET_INSTR :kick_drum
+	SET_DUR :eth
+	PLAY_NOTE :kick_note
+	SET_INSTR :hihat
+	SET_DUR :sxt
+	PLAY_NOTE :hihat_note
+	SET_INSTR :kick_drum
+	PLAY_NOTE :kick_note
+	SET_DUR :eth
+	PLAY_NOTE :kick_note
+	SET_INSTR :hihat
+	SET_DUR :sxt
+	PLAY_NOTE :hihat_note
+	SET_INSTR :kick_drum
+	PLAY_NOTE :kick_note
+	SET_DUR :eth
+	PLAY_NOTE :kick_note
+	SET_INSTR :hihat
+	SET_DUR :sxt
+	PLAY_NOTE :hihat_note
+	PLAY_NOTE :hihat_note
+	
+	SET_INSTR :kick_drum
+	SET_DUR :sxt
+	PLAY_NOTE :kick_note
+	PLAY_NOTE :kick_note
+	SET_INSTR :hihat
+	PLAY_NOTE :hihat_note
+	SET_INSTR :kick_drum
+	PLAY_NOTE :kick_note
+	SET_INSTR :kick_drum
+	SET_DUR :sxt
+	PLAY_NOTE :kick_note
+	PLAY_NOTE :kick_note
+	SET_INSTR :hihat
+	PLAY_NOTE :hihat_note
+	SET_INSTR :kick_drum
+	PLAY_NOTE :kick_note
+	SET_INSTR :kick_drum
+	SET_DUR :sxt
+	PLAY_NOTE :kick_note
+	PLAY_NOTE :kick_note
+	SET_INSTR :hihat
+	PLAY_NOTE :hihat_note
+	SET_INSTR :kick_drum
+	PLAY_NOTE :kick_note
+	SET_INSTR :kick_drum
+	SET_DUR :sxt
+	PLAY_NOTE :kick_note
+	PLAY_NOTE :kick_note
+	SET_INSTR :hihat
+	PLAY_NOTE :hihat_note
+	SET_INSTR :kick_drum
+	PLAY_NOTE :kick_note
+
+	SET_INSTR :kick_drum
+	SET_DUR :sxt
+	PLAY_NOTE :kick_note
+	PLAY_NOTE :kick_note
+	SET_INSTR :hihat
+	PLAY_NOTE :hihat_note
+	PLAY_NOTE :hihat_note
+	REST_NOTE
+	SET_INSTR :kick_drum
+	PLAY_NOTE :kick_note
+	SET_INSTR :hihat
+	PLAY_NOTE :hihat_note
+	SET_INSTR :kick_drum
+	PLAY_NOTE :kick_note
+	SET_DUR :eth
+	PLAY_NOTE :kick_note
+	SET_INSTR :hihat
+	PLAY_NOTE :hihat_note
+	SET_INSTR :kick_drum
+	PLAY_NOTE :kick_note
+	SET_INSTR :hihat
+	SET_DUR :sxt
+	PLAY_NOTE :hihat_note
+	PLAY_NOTE :hihat_note
+
+	SET_INSTR :kick_drum
+	SET_DUR :sxt
+	PLAY_NOTE :kick_note
+	PLAY_NOTE :kick_note
+	SET_INSTR :hihat
+	PLAY_NOTE :hihat_note
+	SET_INSTR :kick_drum
+	PLAY_NOTE :kick_note
+
+	PLAY_NOTE :kick_note
+	SET_INSTR :hihat
+	PLAY_NOTE :hihat_note
+	PLAY_NOTE :hihat_note
+	SET_INSTR :kick_drum
+	PLAY_NOTE :kick_note
+	TIE_NOTE
+	SET_INSTR :hihat
+	PLAY_NOTE :hihat_note
+	SET_INSTR :kick_drum
+	PLAY_NOTE :kick_note
+	TIE_NOTE
+	SET_INSTR :hihat
+	PLAY_NOTE :hihat_note
+	SET_INSTR :kick_drum
+	PLAY_NOTE :kick_note
+	SET_INSTR :hihat
+	PLAY_NOTE :hihat_note
+	SET_INSTR :kick_drum
+	PLAY_NOTE :kick_note
+
+
+
+	END
+
+
+
+
+
+
+
+
+.p1_glocken
+
+	SET_INSTR :glocken
+	SET_VVOL :glocken_vol
+	SET_VIBRA :glocken_vibra_delay, :glocken_vibra_rate, :glocken_vibra_depth
+	VOC_TRNSP :glocken_transpose
+	TUNE x60
+
+	;POST_BEND x06, x03, x03 
+	SET_D_SV :sxt, x7d
+	PLAY_NOTE >B5
+	PLAY_NOTE >E5
+	PLAY_NOTE >G#5
+	PLAY_NOTE >E5
+	PLAY_NOTE >B5
+	PLAY_NOTE >E5
+	PLAY_NOTE >G#5
+	PLAY_NOTE >E5
+	PLAY_NOTE >B5
+	PLAY_NOTE >E5
+	PLAY_NOTE >G#5
+	PLAY_NOTE >E5
+	PLAY_NOTE >B5
+	PLAY_NOTE >E5
+	PLAY_NOTE >G#5
+	PLAY_NOTE >E5
+
+	PLAY_NOTE >B5
+	PLAY_NOTE >E5
+	PLAY_NOTE >G#5
+	PLAY_NOTE >E5
+	PLAY_NOTE >B5
+	PLAY_NOTE >E5
+	PLAY_NOTE >G#5
+	PLAY_NOTE >E5
+	PLAY_NOTE >B5
+	PLAY_NOTE >E5
+	PLAY_NOTE >G#5
+	PLAY_NOTE >E5
+	PLAY_NOTE >B5
+	PLAY_NOTE >E5
+	PLAY_NOTE >G#5
+	PLAY_NOTE >E5
+
+	PLAY_NOTE >B4
+	PLAY_NOTE >E5
+	PLAY_NOTE >G#5
+	PLAY_NOTE >E5
+	PLAY_NOTE >B4
+	PLAY_NOTE >E5
+	PLAY_NOTE >G#5
+	PLAY_NOTE >E5
+	PLAY_NOTE >B4
+	PLAY_NOTE >E5
+	PLAY_NOTE >F#5
+	PLAY_NOTE >E5
+	PLAY_NOTE >B4
+	PLAY_NOTE >E5
+	PLAY_NOTE >G#5
+	PLAY_NOTE >E5
+
+	PLAY_NOTE >B5
+	PLAY_NOTE >E5
+	PLAY_NOTE >G#5
+	PLAY_NOTE >E5
+	PLAY_NOTE >B5
+	PLAY_NOTE >E5
+	PLAY_NOTE >G#5
+	PLAY_NOTE >E5
+	PLAY_NOTE >B5
+	PLAY_NOTE >E5
+	PLAY_NOTE >G#5
+	PLAY_NOTE >E5
+	PLAY_NOTE >B5
+	PLAY_NOTE >E5
+	PLAY_NOTE >G#5
+	PLAY_NOTE >E5
+
+	VIBRA_OFF
+	BEND_OFF
+	END
+
+
+
+
+
+.p1_effects
+	SET_VVOL x4e
+
+	SET_INSTR :whistle
+	SET_D_SV :qtr, x7d
+
+	REST_NOTE
+	REST_NOTE
+	REST_NOTE
+	REST_NOTE
+
+	REST_NOTE
+	REST_NOTE
+	SET_DUR :sxt
+	REST_NOTE
+	PLAY_NOTE >B4
+	REST_NOTE
+	PLAY_NOTE >B4
+	PLAY_NOTE >B4
+	PLAY_NOTE >B4
+	PLAY_NOTE >B4
+	TIE_NOTE
+
+
+	SET_DUR :qtr
+	REST_NOTE
+	REST_NOTE
+	REST_NOTE
+	REST_NOTE
+
+	REST_NOTE
+	REST_NOTE
+	SET_DUR :sxt
+	REST_NOTE
+	PLAY_NOTE >B4
+	REST_NOTE
+	PLAY_NOTE >A4
+	PLAY_NOTE >G4
+	PLAY_NOTE >G4
+	PLAY_NOTE >B4
+	TIE_NOTE
+
+	END
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+.p2_trumpet_1
+	
+	SET_INSTR :trumpet_1_instrument
+	SET_VVOL :trumpet_vol
+
+	VOC_TRNSP :trumpet_1_transpose
+
+	ECHO_PRMS x03, x20, x03
+
+	SET_D_SV :dot_eth, x7b
+	PLAY_NOTE >G#5
+	SET_DUR :sxt
+	PLAY_NOTE >F#5
+	TIE_NOTE
+	;SET_VVOL :trumpet_vol
+	PLAY_NOTE >B4
+	SET_DUR :dot_eth
+	PLAY_NOTE >D#5
+	PLAY_NOTE >E5
+	SET_DUR :eth
+	PLAY_NOTE >F#5
+	PLAY_NOTE >E5
+
+	PRE_BEND x00, :sxt, x04
+	SET_VVOL :trumpet_cresc_vol
+	FADE_VVOL :whole, :trumpet_big_vol
+	SET_DUR :dot_eth
+	PLAY_NOTE >F#4
+	PLAY_NOTE >G#4
+	PLAY_NOTE >A4
+	PLAY_NOTE >A#4
+	SET_DUR :qtr
+	POST_BEND :qtr_trpl, :eth_trpl, xF8
+	PLAY_NOTE >B4
+	BEND_OFF
+
+	END
+
+
+.p2_trumpet_2
+	
+	SET_INSTR :trumpet_2_instrument
+	SET_VVOL :trumpet_vol
+
+	VOC_TRNSP :trumpet_2_transpose
+
+
+	SET_D_SV :dot_eth, x7b
+	PLAY_NOTE >G#4
+	SET_DUR :sxt
+	PLAY_NOTE >A4
+	TIE_NOTE
+	PLAY_NOTE >B4
+	SET_DUR :dot_eth
+	PLAY_NOTE >D#5
+	PLAY_NOTE >G#4
+	SET_DUR :eth
+	PLAY_NOTE >A4
+	PLAY_NOTE >G#4
+
+	PRE_BEND x00, :sxt, x04
+	SET_VVOL :trumpet_cresc_vol
+	FADE_VVOL :whole, :trumpet_big_vol
+	SET_DUR :dot_eth
+	PLAY_NOTE >C4
+	PLAY_NOTE >D#4
+	PLAY_NOTE >E4
+	PLAY_NOTE >E#4
+	SET_DUR :qtr
+	POST_BEND :dot_eth, :sxt, xF8
+	PLAY_NOTE >F#4
+	BEND_OFF
+
+	
+
+
+.p2_trumpet_3
+	
+	SET_INSTR :trumpet_3_instrument
+	SET_VVOL :trumpet_vol
+
+	VOC_TRNSP :trumpet_3_transpose
+
+
+	SET_D_SV :dot_eth, x7b
+	PLAY_NOTE >D4
+	SET_DUR :sxt
+	PLAY_NOTE >F#4
+	TIE_NOTE
+	PLAY_NOTE >G#4
+	SET_DUR :dot_eth
+	PLAY_NOTE >B4
+	PLAY_NOTE >E4
+	SET_DUR :eth
+	PLAY_NOTE >F#4
+	PLAY_NOTE >E4
+
+	PRE_BEND x00, :sxt, x04
+	SET_VVOL :trumpet_cresc_vol
+	FADE_VVOL :whole, :trumpet_big_vol
+	SET_DUR :dot_eth
+	PLAY_NOTE >A3
+	PLAY_NOTE >B3
+	PLAY_NOTE >C#4
+	PLAY_NOTE >D4
+	SET_DUR :qtr
+	POST_BEND :qtr_trpl, :eth_trpl, xF8
+	PLAY_NOTE >D#4
+	BEND_OFF
+
+	
+
+
+
+.p2_slap_bass
+	
+	SET_INSTR :slap_bass_instrument
+	SET_VVOL :slap_bass_vol
+
+	;VOC_TRNSP :slap_bass_tranpose
+
+	SET_D_SV :dot_eth, x7d
+	PLAY_NOTE >C#3
+	SET_DUR :sxt
+	PLAY_NOTE >D#3
+	TIE_NOTE
+	PLAY_NOTE >F#3
+	SET_DUR :dot_eth
+	PLAY_NOTE >F#2
+	PLAY_NOTE >G#2
+	SET_DUR :eth
+	PLAY_NOTE >A2
+	PLAY_NOTE >B2
+
+	SET_DUR :sxt
+	PLAY_NOTE >F#2
+	TIE_NOTE
+	PLAY_NOTE >F#3
+	PLAY_NOTE >G#2
+	TIE_NOTE
+	PLAY_NOTE >F#3
+	PLAY_NOTE >A2
+	TIE_NOTE
+	PLAY_NOTE >F#3
+	PLAY_NOTE >A#2
+	TIE_NOTE
+	PLAY_NOTE >F#3
+	SET_DUR :qtr
+	PLAY_NOTE >B2
+
+	
+
+
+
+.p2_snare
+	SET_INSTR :snare
+	SET_VVOL :snare_vol
+
+	SET_D_SV :sxt, x27
+	PLAY_NOTE :snare_note
+	TIE_NOTE
+	REST_NOTE
+	PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	TIE_NOTE
+	REST_NOTE
+	PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+	TIE_NOTE
+	PLAY_NOTE :snare_note
+	TIE_NOTE
+	PLAY_NOTE :snare_note
+	TIE_NOTE
+
+	PLAY_NOTE :snare_note
+	TIE_NOTE
+	REST_NOTE
+	PLAY_NOTE :snare_note
+	TIE_NOTE
+	REST_NOTE
+	PLAY_NOTE :snare_note
+	TIE_NOTE
+	REST_NOTE
+	PLAY_NOTE :snare_note
+	TIE_NOTE
+	REST_NOTE
+	SET_DUR :eth
+	PLAY_NOTE :snare_note
+	PLAY_NOTE :snare_note
+
+
+
+
+
+
+.p2_kick_hihat
+	SET_INSTR :kick_drum
+	SET_VVOL :drum_vol
+
+
+	SET_D_SV :sxt, x29
+	PLAY_NOTE :kick_note
+	TIE_NOTE
+	SET_INSTR :hihat
+	PLAY_NOTE :hihat_note
+	SET_INSTR :kick_drum
+	PLAY_NOTE :kick_note
+	PLAY_NOTE :kick_note
+	TIE_NOTE
+	SET_INSTR :hihat
+	PLAY_NOTE :hihat_note
+	SET_INSTR :kick_drum
+	PLAY_NOTE :kick_note
+	PLAY_NOTE :kick_note
+	TIE_NOTE
+	SET_INSTR :hihat
+	PLAY_NOTE :hihat_note
+	SET_INSTR :kick_drum
+	PLAY_NOTE :kick_note
+	PLAY_NOTE :kick_note
+	TIE_NOTE
+	SET_INSTR :hihat
+	PLAY_NOTE :hihat_note
+	SET_INSTR :kick_drum
+	PLAY_NOTE :kick_note
+
+	PLAY_NOTE :kick_note
+	TIE_NOTE
+	SET_INSTR :hihat
+	PLAY_NOTE :hihat_note
+	SET_INSTR :kick_drum
+	PLAY_NOTE :kick_note
+	TIE_NOTE
+	SET_INSTR :hihat
+	PLAY_NOTE :hihat_note
+	SET_INSTR :kick_drum
+	PLAY_NOTE :kick_note
+	TIE_NOTE
+	SET_INSTR :hihat
+	PLAY_NOTE :hihat_note
+	SET_INSTR :kick_drum
+	PLAY_NOTE :kick_note
+	TIE_NOTE
+	SET_INSTR :hihat
+	PLAY_NOTE :hihat_note
+	SET_INSTR :kick_drum
+	PLAY_NOTE :kick_note
+	PLAY_NOTE :kick_note
+	PLAY_NOTE :kick_note
+	PLAY_NOTE :kick_note
+
+	
+
+
+
+
+.p2_glocken
+
+	SET_INSTR :glocken
+	SET_VVOL :glocken_vol
+	SET_VIBRA :glocken_vibra_delay, :glocken_vibra_rate, :glocken_vibra_depth
+	VOC_TRNSP :glocken_transpose
+	TUNE x60
+
+	;POST_BEND x06, x03, x03
+	SET_D_SV :sxt, x7d
+	PLAY_NOTE >D#5
+	PLAY_NOTE >E5
+	PLAY_NOTE >F#5
+	PLAY_NOTE >G#5
+	PLAY_NOTE >D#5
+	PLAY_NOTE >E5
+	PLAY_NOTE >F#5
+	PLAY_NOTE >G#5
+	PLAY_NOTE >D#5
+	PLAY_NOTE >E5
+	PLAY_NOTE >F#5
+	PLAY_NOTE >G#5
+	PLAY_NOTE >D#5
+	PLAY_NOTE >E5
+	PLAY_NOTE >F#5
+	PLAY_NOTE >G#5
+
+	PLAY_NOTE >E5
+	PLAY_NOTE >G#5
+	PLAY_NOTE >B5
+	PLAY_NOTE >E5
+	PLAY_NOTE >G#5
+	PLAY_NOTE >C#6
+	PLAY_NOTE >E5
+	PLAY_NOTE >A5
+	PLAY_NOTE >C#6
+	PLAY_NOTE >E5
+	PLAY_NOTE >A5
+	PLAY_NOTE >D#6
+	PLAY_NOTE >E5
+	PLAY_NOTE >A5
+	PLAY_NOTE >C#6
+	PLAY_NOTE >F#6
+
+	VIBRA_OFF
+	BEND_OFF
+	
+
+.p2_effects
+	SET_VVOL x4e
+
+	SET_INSTR :whistle
+	SET_D_SV :qtr, x7d
+
+	REST_NOTE
+	REST_NOTE
+	REST_NOTE
+	REST_NOTE
+
+	SET_VVOL x28
+	FADE_VVOL :dot_half, x4e
+	SET_DUR :dot_eth
+	PLAY_NOTE >G4
+	PLAY_NOTE >G4
+	PLAY_NOTE >A4
+	PLAY_NOTE >A#4
+	SET_DUR :sxt
+	TUNE x90
+	;PLAY_NOTE >A#4
+	;PLAY_NOTE >A#4
+	;PLAY_NOTE >A#4
+	;PLAY_NOTE >A#4
+	SET_DUR :qtr
+	PLAY_NOTE >B4
+	;PLAY_NOTE >B4
+	;PLAY_NOTE >B4
+	;PLAY_NOTE >B4
+	

@@ -1,0 +1,13 @@
+
+
+
+
+song_files =
+{
+	title_screen : songs/victory
+}
+
+
+ROM_file = Super Mario Kart (USA).sfc
+
+headered = false
