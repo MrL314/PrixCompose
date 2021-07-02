@@ -5,7 +5,7 @@ Welcome to PrixCompose v0.3 (Beta) by MrL314!
 
 version 0.3: July 2, 2021
 
-> Quick Download: https://github.com/MrL314/PrixCompose/archive/refs/tags/v0.3.zip
+> Quick Download: https://github.com/MrL314/PrixCompose/archive/refs/tags/v0.3.1.zip
 
 
 
